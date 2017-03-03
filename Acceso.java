@@ -6,13 +6,14 @@ public class Acceso
     private int hora;
     private int minutos;
     
-    public Acceso(int ano, int mes, int dia, int hora, int minutos)
+    public Acceso(String fecha)
     {
-        this.ano = ano;
-        this.mes = mes;
-        this.dia = dia;
-        this.hora = hora;
-        this.minutos = minutos;
+        String[] elementosFecha = fecha.split(" ");
+        this.ano = Integer.parseInt(elementosFecha[0]);
+        this.mes = Integer.parseInt(elementosFecha[1]);
+        this.dia = Integer.parseInt(elementosFecha[2]);
+        this.hora = Integer.parseInt(elementosFecha[3]);
+        this.minutos = Integer.parseInt(elementosFecha[4]);
     }
     
     public int getAno() 
