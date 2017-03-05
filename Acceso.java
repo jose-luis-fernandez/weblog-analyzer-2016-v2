@@ -1,18 +1,27 @@
 public class Acceso
 {
+    private String ip;
     private int ano;
     private int mes;
     private int dia;
     private int hora;
     private int minutos;
+    private String paginaWeb;
+    private String respuestaHTTP;
     
-    public Acceso(int ano, int mes, int dia, int hora, int minutos)
+    public Acceso(String linea)
     {
-        this.ano = ano;
-        this.mes = mes;
-        this.dia = dia;
-        this.hora = hora;
-        this.minutos = minutos;
+        String[] elementosLinea = linea.split(" ");
+        this.ip = elementosLinea[0];
+        String anio = elementosLinea[1].replace("[", "");
+        String minuto = elementosLinea[5].replace("]", "");
+        this.ano = Integer.parseInt(anio);
+        this.mes = Integer.parseInt(elementosLinea[2]);
+        this.dia = Integer.parseInt(elementosLinea[3]);
+        this.hora = Integer.parseInt(elementosLinea[4]);
+        this.minutos = Integer.parseInt(minuto);
+        this.paginaWeb = elementosLinea[6];
+        respuestaHTTP = elementosLinea[7];
     }
     
     public int getAno() 
