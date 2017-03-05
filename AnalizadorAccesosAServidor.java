@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class AnalizadorAccesosAServidor
 {
     private ArrayList<Acceso> accesos;
-    
+    private ArrayList<String> paginasWeb = new ArrayList<String>();
+    private ArrayList<Integer> numeroVecesPaginaWeb = new ArrayList<Integer>();
     
     public AnalizadorAccesosAServidor() 
     {
@@ -63,13 +64,68 @@ public class AnalizadorAccesosAServidor
     
     public String paginaWebMasSolicitada() 
     {
-        return "";
+        String paginaADevolver = null;
+        int posicionPaginaWebMasRepetida = -1;
+        int mayor = 0;
+        if (accesos.size() > 0){
+            for (int i = 0; i < accesos.size(); i++){
+                if (i > 0){
+                    boolean encontrado = false;
+                    int j = 0;
+                    while (j < paginasWeb.size() && encontrado == false){
+                        if (accesos.get(i).getpaginaWeb().equals(paginasWeb.get(j))){
+                            numeroVecesPaginaWeb.set(j, (numeroVecesPaginaWeb.get(j) + 1));
+                            encontrado = true;
+                        }
+                        j++;
+                    }
+                    if (encontrado == false){
+                        paginasWeb.add(accesos.get(i).getpaginaWeb());
+                        numeroVecesPaginaWeb.add(1);
+                    }
+                }
+                else{
+                    paginasWeb.add(accesos.get(i).getpaginaWeb());
+                    numeroVecesPaginaWeb.add(1);
+                }
+            }
+            
+            for (int i = 0; i < numeroVecesPaginaWeb.size() - 1; i++){
+                if (mayor < numeroVecesPaginaWeb.get(i)){
+                    posicionPaginaWebMasRepetida = i;
+                    mayor = numeroVecesPaginaWeb.get(i);
+                }
+            }
+            paginaADevolver = paginasWeb.get(posicionPaginaWebMasRepetida);
+            System.out.println("La pagina web más visitada es: " + paginasWeb.get(posicionPaginaWebMasRepetida));
+        }
+        else{
+            System.out.println("Aun no se han registrado accesos.");
+        }
+        accesos.clear();
+        paginasWeb.clear();
+        numeroVecesPaginaWeb.clear();
+        return paginaADevolver;
     }
     
     public String clienteConMasAccesosExitosos()
     {
         return "";
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
