@@ -9,14 +9,12 @@ public class AnalizadorAccesosAServidor
     private ArrayList<Integer> numeroVecesPaginaWeb = new ArrayList<Integer>();
     private ArrayList<String> ip = new ArrayList<String>();
     private ArrayList<Integer> numeroVecesIp = new ArrayList<Integer>();
-    
-    
+
     public AnalizadorAccesosAServidor() 
     {
         accesos = new ArrayList<>();
     }
-    
-    
+
     public void analizarArchivoDeLog(String archivo)
     {
         accesos.clear();
@@ -34,20 +32,19 @@ public class AnalizadorAccesosAServidor
             System.out.println("Ocurrio algun error al leer el archivo.");
         }
     }
-    
-    
+
     public int obtenerHoraMasAccesos() 
     {
         int valorADevolver = -1;
-        
+
         if (!accesos.isEmpty()) {
             int[] accesosPorHora = new int[24];
-    
+
             for (Acceso accesoActual : accesos) {
                 int horaAccesoActual = accesoActual.getHora();
                 accesosPorHora[horaAccesoActual] = accesosPorHora[horaAccesoActual] + 1;
             }
-            
+
             int numeroDeAccesosMasAlto = accesosPorHora[0];
             int horaDeAccesosMasAlto = 0;
             for (int i = 0; i < accesosPorHora.length; i++) {
@@ -56,14 +53,13 @@ public class AnalizadorAccesosAServidor
                     horaDeAccesosMasAlto = i;
                 }
             }
-            
+
             valorADevolver = horaDeAccesosMasAlto;                      
         }
-        
+
         return valorADevolver;
     }
 
-    
     
     public String paginaWebMasSolicitada() 
     {
@@ -92,7 +88,7 @@ public class AnalizadorAccesosAServidor
                     numeroVecesPaginaWeb.add(1);
                 }
             }
-            
+
             for (int i = 0; i < numeroVecesPaginaWeb.size() - 1; i++){
                 if (mayor < numeroVecesPaginaWeb.get(i)){
                     posicionPaginaWebMasRepetida = i;
@@ -110,13 +106,13 @@ public class AnalizadorAccesosAServidor
         numeroVecesPaginaWeb.clear();
         return paginaADevolver;
     }
-    
+
     public String clienteConMasAccesosExitosos()
     {
         String ipADevolver = null;
         int posicionIpMasRepetida = -1;
         int mayor = 0;
-        
+
         if (accesos.size() > 0){
             for (int i = 0; i < accesos.size(); i++){
                 if (ip.size() > 0){
@@ -141,31 +137,27 @@ public class AnalizadorAccesosAServidor
                     }
                 }
             }
-            
+
             for (int i = 0; i < numeroVecesIp.size() - 1; i++){
                 if (mayor <= numeroVecesIp.get(i)){
                     posicionIpMasRepetida = i;
                     mayor = numeroVecesIp.get(i);
                 }
             }
-            for (int i = 0; i < numeroVecesIp.size(); i++){
-                for (int j = 0; j < numeroVecesIp.size(); j++){
-                    if (numeroVecesIp.get(i) == numeroVecesIp.get(j)){
-                        String[] elementosIp = ip.get(i).split("\\.");
-                        int ip1 = Integer.parseInt(elementosIp[3]);
-                        String[] elementosIp2 = ip.get(j).split("\\.");
-                        int ip2 = Integer.parseInt(elementosIp2[3]);
-                        if (ip2 > ip1){
-                            posicionIpMasRepetida = j;
-                            mayor = numeroVecesIp.get(j);
-                        }
-                        else{
-                            posicionIpMasRepetida = i;
-                            mayor = numeroVecesIp.get(i);
-                        }
+
+            for (int j = 0; j < numeroVecesIp.size(); j++){
+                if (mayor == numeroVecesIp.get(j)){
+                    String[] elementosIp = ip.get(posicionIpMasRepetida).split("\\.");
+                    int ip1 = Integer.parseInt(elementosIp[3]);
+                    String[] elementosIp2 = ip.get(j).split("\\.");
+                    int ip2 = Integer.parseInt(elementosIp2[3]);
+                    if (ip2 > ip1){
+                        posicionIpMasRepetida = j;
+                        mayor = numeroVecesIp.get(j);
                     }
                 }
             }
+
             ipADevolver = ip.get(posicionIpMasRepetida);
             System.out.println("El cliente con más accesos exitosos es: " + ip.get(posicionIpMasRepetida));
         }
@@ -177,20 +169,12 @@ public class AnalizadorAccesosAServidor
         numeroVecesIp.clear();
         return ipADevolver;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
+    
+    
+    
+    
+    
+    
+    
 }
