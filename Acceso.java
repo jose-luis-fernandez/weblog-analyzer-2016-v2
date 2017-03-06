@@ -48,4 +48,19 @@ public class Acceso
     {
         return minutos;
     }
+    
+    public String getpaginaWeb()
+    {
+        return paginaWeb;
+    }
+    
+    public String getIp()
+    {
+        return ip;
+    }
+    
+    public String getRespuestaHTTP()
+    {
+        return respuestaHTTP;
+    }
 }
